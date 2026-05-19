@@ -1,37 +1,46 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Pachristos\FilamentExportCleanup\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Pachristos\FilamentExportCleanup\FilamentExportCleanupServiceProvider;
 
 class TestCase extends Orchestra
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Pachristos\\FilamentExportCleanup\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
-    protected function getPackageProviders($app)
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadMigrationsFrom(dirname(__DIR__).'/vendor/filament/actions/database/migrations');
+    }
+
+    protected function getPackageProviders($app): array
     {
         return [
-            SkeletonServiceProvider::class,
+            FilamentExportCleanupServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        config()->set('filesystems.disks.local', [
+            'driver' => 'local',
+            'root' => storage_path('app'),
+            'throw' => false,
+        ]);
     }
 }

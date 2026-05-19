@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('migration_table_name_table', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table): void {
             $table->id();
-
-            // add fields
-
             $table->timestamps();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
     }
 };
