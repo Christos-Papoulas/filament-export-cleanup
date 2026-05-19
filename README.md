@@ -132,6 +132,10 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
+## Sponsoring
+
+Development of this package is supported by [Christos Papoulas](https://github.com/sponsors/Christos-Papoulas).
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
