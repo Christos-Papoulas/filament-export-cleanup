@@ -7,6 +7,15 @@ use Pachristos\FilamentExportCleanup\Tests\TestCase;
 
 uses(TestCase::class)->in('Feature');
 
+beforeEach(function (): void {
+    Storage::fake('local');
+
+    config()->set('filament-export-cleanup.enabled', true);
+    config()->set('filament-export-cleanup.retention_hours', 72);
+    config()->set('filament-export-cleanup.file_disk', 'local');
+    config()->set('filament-export-cleanup.delete_database_records', true);
+})->in('Feature');
+
 /**
  * @param  array<string, mixed>  $attributes
  */

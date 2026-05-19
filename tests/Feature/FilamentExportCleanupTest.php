@@ -3,15 +3,6 @@
 use Illuminate\Support\Facades\Storage;
 use Pachristos\FilamentExportCleanup\FilamentExportCleanup;
 
-beforeEach(function (): void {
-    Storage::fake('local');
-
-    config()->set('filament-export-cleanup.enabled', true);
-    config()->set('filament-export-cleanup.retention_hours', 72);
-    config()->set('filament-export-cleanup.file_disk', 'local');
-    config()->set('filament-export-cleanup.delete_database_records', true);
-});
-
 it('removes export files on disk and deletes database records when they are older than the configured retention', function () {
     // Arrange
     $userId = createTestUserId();
