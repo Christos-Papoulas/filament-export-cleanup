@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pachristos\FilamentExportCleanup\Commands;
 
 use Illuminate\Console\Command;
