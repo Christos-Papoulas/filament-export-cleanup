@@ -11,7 +11,7 @@ Automatically remove old Filament export files from disk and optionally delete t
 ## Requirements
 
 - PHP 8.2+
-- Laravel 11 or 12
+- Laravel 11, 12 or 13
 - [Filament Actions](https://filamentphp.com) (exports) v4 or v5
 
 ## Installation
