@@ -162,3 +162,8 @@ Development of this package is supported by [Christos Papoulas](https://github.c
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+## Plan features or improvements
+
+- [ ] Remove old uncompleted reports from database.
+- [ ] Force minimum PHP version to 8.3.
