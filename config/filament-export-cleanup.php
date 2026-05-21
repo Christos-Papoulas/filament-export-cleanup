@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Console\Scheduling\Event;
+
 // config for Pachristos/FilamentExportCleanup
 
 return [
@@ -56,9 +58,8 @@ return [
     */
     'schedule' => [
         'enabled' => env('FILAMENT_EXPORT_CLEANUP_SCHEDULE_ENABLED', true),
-        'expression' => env(
-            'FILAMENT_EXPORT_CLEANUP_SCHEDULE_EXPRESSION',
-            "dailyAt('02:00')"
-        ),
+        'frequency' => fn (Event $event) => $event
+            ->weekdays()
+            ->dailyAt('02:00'),
     ],
 ];

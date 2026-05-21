@@ -5,6 +5,18 @@ All notable changes to `filament-export-cleanup` will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0](https://github.com/Christos-Papoulas/filament-export-cleanup/compare/v1.0.1...v1.1.0) - 2026-05-21
+
+### Changed
+
+- Replaced `schedule.expression` with `schedule.frequency`, which accepts a `Closure` receiving the scheduled `Event` and supports any of Laravel's [schedule frequency options](https://laravel.com/docs/13.x/scheduling#schedule-frequency-options) (chained methods like `dailyAt()`, `hourly()`, `weekdays()`, `twiceDaily()`, `timezone()`, etc.) or a raw cron expression string.
+- Default schedule changed from daily at 02:00 to weekdays at 02:00.
+- Removed the `FILAMENT_EXPORT_CLEANUP_SCHEDULE_EXPRESSION` environment variable; configure `schedule.frequency` directly in `config/filament-export-cleanup.php`.
+
+### Documentation
+
+- Updated `README.md` to document the new `schedule.frequency` option with examples and a link to Laravel's schedule frequency options.
+
 ## [v1.0.1](https://github.com/Christos-Papoulas/filament-export-cleanup/releases/tag/1.0.0/compare/v1.0.0...v1.0.1) - 2026-05-19
 
 - update docs

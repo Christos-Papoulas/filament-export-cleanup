@@ -23,6 +23,7 @@ _ide_helper_models.php
 /.idea
 /.fleet
 /.vscode
+/.history
 
 # Misc
 phpunit.xml

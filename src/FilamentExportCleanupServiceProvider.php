@@ -41,25 +41,27 @@ class FilamentExportCleanupServiceProvider extends PackageServiceProvider
             return;
         }
 
-        $expression = config('filament-export-cleanup.schedule.expression');
+        $frequency = config('filament-export-cleanup.schedule.frequency');
 
-        if ($expression === null || $expression === '') {
+        if ($frequency === null || $frequency === '') {
             return;
         }
 
         $event = $schedule->command(FilamentExportCleanupCommand::class);
 
-        $this->applyScheduleExpression($event, $expression);
+        $this->applyScheduleFrequency($event, $frequency);
     }
 
-    protected function applyScheduleExpression(Event $event, string $expression): void
+    protected function applyScheduleFrequency(Event $event, mixed $frequency): void
     {
-        if (preg_match("/^dailyAt\('(\d{1,2}:\d{2})'\)$/", $expression, $matches)) {
-            $event->dailyAt($matches[1]);
+        if ($frequency instanceof \Closure) {
+            $frequency($event);
 
             return;
         }
 
-        $event->cron($expression);
+        if (is_string($frequency) && $frequency !== '') {
+            $event->cron($frequency);
+        }
     }
 }

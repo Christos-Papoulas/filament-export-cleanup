@@ -47,7 +47,7 @@ Configuration lives in `config/filament-export-cleanup.php`. All options can be 
 | `delete_database_records` | `FILAMENT_EXPORT_CLEANUP_DELETE_DATABASE_RECORDS` | `true` | Also delete rows from the `exports` table |
 | `file_disk` | `FILAMENT_EXPORT_CLEANUP_FILE_DISK` | `local` | Filesystem disk to clean (must match your Filament export disk) |
 | `schedule.enabled` | `FILAMENT_EXPORT_CLEANUP_SCHEDULE_ENABLED` | `true` | Register the cleanup command on the Laravel scheduler |
-| `schedule.expression` | `FILAMENT_EXPORT_CLEANUP_SCHEDULE_EXPRESSION` | `dailyAt('02:00')` | When to run (see [Scheduling](#scheduling)) |
+| `schedule.frequency` | — | Weekdays at `02:00` | When to run (see [Scheduling](#scheduling)) |
 
 Set `file_disk` to the same disk your Filament exports use (`local` or `public`). S3 and other remote disks are not supported yet.
 
@@ -61,7 +61,7 @@ When `schedule.enabled` is `true`, the package registers `cleanup:filament-expor
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-The default schedule runs daily at 02:00.
+The default schedule runs on weekdays at 02:00.
 
 ### Manual cleanup
 
@@ -95,17 +95,38 @@ $deletedIds = FilamentExportCleanup::run();
 
 ## Scheduling
 
-The `schedule.expression` config accepts:
+The `schedule.frequency` config controls when the cleanup command is registered on Laravel's scheduler. You can configure it with any of Laravel's [schedule frequency options](https://laravel.com/docs/13.x/scheduling#schedule-frequency-options) by passing a `Closure` that receives the scheduled `Event` and chains any combination of frequency methods (`dailyAt()`, `hourly()`, `weekdays()`, `cron()`, timezone constraints, etc.). A raw cron expression string is also accepted.
 
-- A `dailyAt('HH:MM')` string (default: `dailyAt('02:00')`)
-- A standard cron expression (for example `0 3 * * 0` for Sundays at 03:00)
+The default runs the cleanup on weekdays at 02:00:
 
-Examples in `.env`:
+```php
+use Illuminate\Console\Scheduling\Event;
 
-```dotenv
-FILAMENT_EXPORT_CLEANUP_SCHEDULE_EXPRESSION="dailyAt('03:30')"
-# or
-FILAMENT_EXPORT_CLEANUP_SCHEDULE_EXPRESSION="0 3 * * *"
+'schedule' => [
+    'enabled' => env('FILAMENT_EXPORT_CLEANUP_SCHEDULE_ENABLED', true),
+    'frequency' => fn (Event $event) => $event
+        ->weekdays()
+        ->dailyAt('02:00'),
+],
+```
+
+Use any frequency method (or combination) Laravel supports. A few examples:
+
+```php
+'frequency' => fn (Event $event) => $event->hourly(),
+
+'frequency' => fn (Event $event) => $event
+    ->twiceDaily(1, 13)
+    ->timezone('Europe/Athens'),
+
+'frequency' => fn (Event $event) => $event
+    ->weeklyOn(0, '03:00'),
+```
+
+Or supply a raw cron expression directly:
+
+```php
+'frequency' => '0 3 * * 0',
 ```
 
 Disable automatic scheduling and run cleanup only manually or from your own scheduler:
@@ -113,6 +134,8 @@ Disable automatic scheduling and run cleanup only manually or from your own sche
 ```dotenv
 FILAMENT_EXPORT_CLEANUP_SCHEDULE_ENABLED=false
 ```
+
+See the [Laravel schedule frequency options](https://laravel.com/docs/13.x/scheduling#schedule-frequency-options) documentation for the full list of available methods.
 
 ## How it works
 
