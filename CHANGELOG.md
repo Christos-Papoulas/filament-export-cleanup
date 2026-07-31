@@ -5,6 +5,21 @@ All notable changes to `filament-export-cleanup` will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.1](https://github.com/Christos-Papoulas/filament-export-cleanup/compare/1.1.0...1.1.1) - 2026-07-31
+
+### Added
+
+- Documented security disclosure policy (`.github/SECURITY.md`) for private vulnerability reporting.
+
+### Documentation
+
+- Documented Laravel 13 support in the README requirements.
+- Added Plumb score badge to the README.
+
+### Changed
+
+- Pinned GitHub Actions to commit SHAs and bumped `actions/checkout` to v7.
+
 ## [v1.1.0](https://github.com/Christos-Papoulas/filament-export-cleanup/compare/v1.0.1...v1.1.0) - 2026-05-21
 
 ### Changed
