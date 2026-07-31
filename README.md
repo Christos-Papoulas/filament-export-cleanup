@@ -3,6 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pachristos/filament-export-cleanup.svg?style=flat-square)](https://packagist.org/packages/pachristos/filament-export-cleanup)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/Christos-Papoulas/filament-export-cleanup/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/Christos-Papoulas/filament-export-cleanup/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/pachristos/filament-export-cleanup.svg?style=flat-square)](https://packagist.org/packages/pachristos/filament-export-cleanup)
+[![Plumb score](https://plumbphp.dev/badges/pachristos/filament-export-cleanup/composite.svg)](https://plumbphp.dev/pachristos/filament-export-cleanup)
 
 Automatically remove old Filament export files from disk and optionally delete their `exports` table rows.
 
